@@ -126,8 +126,13 @@ if __name__ == "__main__":
 
 card1 = Card(rank = 7, suit = 2)
 card2 = Card(rank = 12)
-
-
+card3 = Card(rank = 1)
+card4 = Card(suit = 1)
+card5 = Card(suit = 2)
+card6 = Card()
+card7 = Deck()
+card8 = Deck()
+game = play_war_game(testing=True)
 
 
 
@@ -137,11 +142,26 @@ card2 = Card(rank = 12)
 ### Write unit tests below this line for the cards code above.
 
 class KnownValues(unittest.TestCase):
-	def test_guesses(self):
-		self.assertEqual(card2,'Queen')
-	def test_guesses(self):
+	def test_1(self):
+		self.assertEqual(card2.rank,"Queen")
+		self.assertEqual(card3.rank, 'Ace')
+		self.assertEqual(card4.suit, 'Clubs')
+		self.assertEqual(card5.suit, 'Hearts')
+
+	def test_2(self):
 		self.assertEqual(str(card1) , '7 of Hearts')
 
+	def test_3(self):
+		self.assertEqual(card6.suit_names, ["Diamonds","Clubs","Hearts","Spades"])
+
+	def test_4(self):
+		self.assertEqual(len(card7.cards) , 52)
+
+	# def test_5(self):
+	# 	self.assertEqual(card8.pop_card(), type(card6))
+
+	def test_5(self):
+		self.assertEqual(game, (Deck, p1_score, p2_score))
 
 if __name__ == '__main__':
 	unittest.main()
