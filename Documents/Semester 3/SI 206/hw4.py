@@ -62,7 +62,7 @@ class Deck(object):
 
 	def sort_cards(self):
 		# Basically, remake the deck in a sorted way
-		# This is assuming you cannot have more than the normal 52 cars in a deck
+		# This is assuming you cannot have more than the normal 52 cards in a deck
 		self.cards = []
 		for suit in range(4):
 			for rank in range(1,14):
@@ -124,15 +124,21 @@ if __name__ == "__main__":
 
 #########
 
-card1 = Card(rank = 7, suit = 2)
-card2 = Card(rank = 12)
-card3 = Card(rank = 1)
+
+card1 = Card(rank = 12)
+card2 = Card(rank = 1)
+card3 = Card(rank = 3)
 card4 = Card(suit = 1)
 card5 = Card(suit = 2)
 card6 = Card()
-card7 = Deck()
+card7 = Card(rank = 7, suit = 2)
 card8 = Deck()
+card9 = Deck()
 game = play_war_game(testing=True)
+
+# Own test cases
+
+card10 = Card(rank = 13 , suit = 3)
 
 
 
@@ -143,25 +149,36 @@ game = play_war_game(testing=True)
 
 class KnownValues(unittest.TestCase):
 	def test_1(self):
-		self.assertEqual(card2.rank,"Queen")
-		self.assertEqual(card3.rank, 'Ace')
+		self.assertEqual(card1.rank,"Queen")
+		self.assertEqual(card2.rank, 'Ace')
+		self.assertEqual(card3.rank, 3)
 		self.assertEqual(card4.suit, 'Clubs')
 		self.assertEqual(card5.suit, 'Hearts')
 
 	def test_2(self):
-		self.assertEqual(str(card1) , '7 of Hearts')
+		self.assertEqual(str(card7) , '7 of Hearts')
 
 	def test_3(self):
 		self.assertEqual(card6.suit_names, ["Diamonds","Clubs","Hearts","Spades"])
 
 	def test_4(self):
-		self.assertEqual(len(card7.cards) , 52)
-
-	# def test_5(self):
-	# 	self.assertEqual(card8.pop_card(), type(card6))
+		self.assertEqual(len(card8.cards) , 52)
 
 	def test_5(self):
-		self.assertEqual(game, (Deck, p1_score, p2_score))
+		self.assertEqual(type(card9.pop_card()), type(Card()))
+
+	def test_5(self):
+		self.assertEqual(type(game), type((str, int, int)))
+
+
+	#Checks the King rank and the Spades suit
+	def test_6(self):
+		self.assertEqual(str(card10), 'King of Spades')
+
+	#Checks that the faces are a list of face cards/ranks
+	def test_7(self):
+		self.assertEqual(card6.faces, {1:"Ace",11:"Jack",12:"Queen",13:"King"})
+
 
 if __name__ == '__main__':
 	unittest.main()
