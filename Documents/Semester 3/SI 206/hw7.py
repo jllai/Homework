@@ -65,8 +65,8 @@ api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
 #### Recommended order of tasks: ####
 ## 1. Set up the caching pattern start -- the dictionary and the try/except 
 ## 		statement shown in class.
-
-serviceurl = 'http://twitter.com'
+key_words = input('Enter Tweet term: ')
+public_tweets = api.search(q = key_words, count = 5)
 CACHE_FNAME = 'cache_tweets.json' # String for your file. We want the JSON file type, bcause that way, we can easily get the information into a Python dictionary!
 
 try:
@@ -82,18 +82,15 @@ except:
 ## 		so it either gets new data or caches data, depending upon what the input 
 ##		to search for is. 
 def twitter_data(loc):
-	url = serviceurl + urllib.parse.urlencode(
-        {'address': loc})
 
 	if loc in CACHE_DICTION:
 		print("Data was in the cache")
 		return CACHE_DICTION[loc]
 	else:
 		print("Making a request for new data...")
-		uh = urllib.request.urlopen(url)
-		data = uh.read().decode()
 		try:
-			CACHE_DICTION[loc] =  json.loads(data)
+			CACHE_DICTION[loc] =  json.loads(CACHE_FNAME)
+			print(CACHE_DICTION[loc])
 			dumped_json_cache = json.dumps(CACHE_DICTION)
 			fw = open(CACHE_FNAME,"w")
 			fw.write(dumped_json_cache)
@@ -108,11 +105,9 @@ def twitter_data(loc):
 
 ## 3. Using a loop, invoke your function, save the return value in a variable, and explore the 
 ##		data you got back!
-while True:
-    address = input('Enter Tweet term: ')
-    if len(address) < 1: break
-    data = twitter_data(address)
-    print(data)
+
+data = twitter_data(key_words)
+print(data)
 
 
 ## 4. With what you learn from the data -- e.g. how exactly to find the 
