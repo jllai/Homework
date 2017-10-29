@@ -3,12 +3,11 @@ import tweepy
 import requests
 import json
 import twitter_info
-import urllib
 
 ## SI 206 - HW
 ## COMMENT WITH: Jamie Lai
 ## Your section day/time: thursday 8:30
-## Any names of people you worked with on this assignment:
+## Any names of people you worked with on this assignment: Rachel Chang
 
 
 ## Write code that uses the tweepy library to search for tweets with three different phrases of the 
@@ -65,8 +64,7 @@ api = tweepy.API(auth, parser=tweepy.parsers.JSONParser())
 #### Recommended order of tasks: ####
 ## 1. Set up the caching pattern start -- the dictionary and the try/except 
 ## 		statement shown in class.
-key_words = input('Enter Tweet term: ')
-public_tweets = api.search(q = key_words, count = 5)
+
 CACHE_FNAME = 'cache_tweets.json' # String for your file. We want the JSON file type, bcause that way, we can easily get the information into a Python dictionary!
 
 try:
@@ -89,9 +87,8 @@ def twitter_data(loc):
 	else:
 		print("Making a request for new data...")
 		try:
-			CACHE_DICTION[loc] =  json.loads(CACHE_FNAME)
-			print(CACHE_DICTION[loc])
-			dumped_json_cache = json.dumps(CACHE_DICTION)
+			results = api.search(q = key_words, count = 5)
+			dumped_json_cache = json.dumps(results)
 			fw = open(CACHE_FNAME,"w")
 			fw.write(dumped_json_cache)
 			fw.close() # Close the open file
@@ -105,18 +102,18 @@ def twitter_data(loc):
 
 ## 3. Using a loop, invoke your function, save the return value in a variable, and explore the 
 ##		data you got back!
-
-data = twitter_data(key_words)
-print(data)
+while True:
+	key_words = input('Enter Tweet term: ')
+	data = twitter_data(key_words)
+	list_of_tweets = data["statuses"]
 
 
 ## 4. With what you learn from the data -- e.g. how exactly to find the 
 ##		text of each tweet in the big nested structure -- write code to print out 
 ## 		content from 5 tweets, as shown in the linked example.
-
-
-
-
+for tweet in list_of_tweets:
+    print(tweet["text"])
+    print("\n")
 
 
 
