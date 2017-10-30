@@ -82,13 +82,14 @@ except:
 def twitter_data(loc):
 
 	if loc in CACHE_DICTION:
-		print("Data was in the cache")
+		print("fetching")
 		return CACHE_DICTION[loc]
 	else:
-		print("Making a request for new data...")
+		print("fetching")
 		try:
 			results = api.search(q = key_words, count = 5)
-			dumped_json_cache = json.dumps(results)
+			CACHE_DICTION[loc] =  results
+			dumped_json_cache = json.dumps(CACHE_DICTION)
 			fw = open(CACHE_FNAME,"w")
 			fw.write(dumped_json_cache)
 			fw.close() # Close the open file
@@ -111,9 +112,10 @@ while True:
 ## 4. With what you learn from the data -- e.g. how exactly to find the 
 ##		text of each tweet in the big nested structure -- write code to print out 
 ## 		content from 5 tweets, as shown in the linked example.
-for tweet in list_of_tweets:
-    print(tweet["text"])
-    print("\n")
+	for tweet in list_of_tweets:
+		print('TEXT: ' , tweet["text"])
+		print('CREATED AT: ' , tweet["created_at"])
+		print("\n")
 
 
 
